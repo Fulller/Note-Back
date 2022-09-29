@@ -4,7 +4,8 @@ const ObjectId = Schema.ObjectId;
 
 const Notes = new Schema({
     value: { type: String },
-    isDelete: { type: Boolean },
+    userName: { type: String },
+    isDelete: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 });
