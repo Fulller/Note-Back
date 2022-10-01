@@ -95,13 +95,15 @@ let updateNote = (body) => {
       message: "Cant't update note!",
     };
     try {
-      let data = await Note.findOne({ id: body.id });
+      let data = await Note.findById(body.id);
+      console.log(data);
       if (data) {
         data.title = body.title;
         data.value = body.value;
         await data.save();
         result.errCode = 0;
         result.message = "Update note succeeds";
+        result.data = data;
         resole(result);
       } else {
         resole(result);
