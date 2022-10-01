@@ -55,6 +55,7 @@ let createNote = (body) => {
       await Note.create({
         userName: body.userName,
         value: body.value,
+        title: body.title,
       });
       result.errCode = 0;
       result.massage = "Create note Success";
@@ -87,9 +88,33 @@ let allnotes = (userName) => {
     }
   });
 };
+let updateNote = (body) => {
+  return new Promise(async (resole, reject) => {
+    let result = {
+      errCode: 5,
+      message: "Cant't update note!",
+    };
+    try {
+      let data = await Note.findOne({ id: body.id });
+      if (data) {
+        data.title = body.title;
+        data.value = body.value;
+        await data.save();
+        result.errCode = 0;
+        result.message = "Update note succeeds";
+        resole(result);
+      } else {
+        resole(result);
+      }
+    } catch (e) {
+      reject(result);
+    }
+  });
+};
 module.exports = {
   allnotes,
   register,
   login,
   createNote,
+  updateNote,
 };
