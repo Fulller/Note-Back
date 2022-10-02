@@ -5,9 +5,11 @@ const upload = require("../index");
 
 route.post("/register", apiController.register);
 route.post("/login", apiController.login);
-route.post("/createNote", apiController.createNote);
 route.post("/allnotes", apiController.getAllNotes);
+route.post("/createNote", apiController.createNote);
 route.post("/updateNote", apiController.updateNote);
 route.post("/deleteNote", apiController.deleteNote);
+route.post("/restoreNote", apiController.restoreNote);
+route.post("/foreverdeleteNote", apiController.foreverdeleteNote);
 
 module.exports = route;

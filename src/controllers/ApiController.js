@@ -78,6 +78,30 @@ async function deleteNote(req, res) {
     });
   }
 }
+async function restoreNote(req, res) {
+  let body = req.body;
+  let data = await services.restoreNote(body);
+  if (data) {
+    return res.json(data);
+  } else {
+    return res.json({
+      errCode: 7,
+      massage: "Can't restore note",
+    });
+  }
+}
+async function foreverdeleteNote(req, res) {
+  let body = req.body;
+  let data = await services.foreverdeleteNote(body);
+  if (data) {
+    return res.json(data);
+  } else {
+    return res.json({
+      errCode: 7,
+      massage: "Can't delete forever note",
+    });
+  }
+}
 module.exports = {
   login,
   register,
@@ -85,4 +109,6 @@ module.exports = {
   getAllNotes,
   updateNote,
   deleteNote,
+  restoreNote,
+  foreverdeleteNote,
 };

@@ -136,6 +136,50 @@ let deleteNote = (body) => {
     }
   });
 };
+let restoreNote = (body) => {
+  return new Promise(async (resole, reject) => {
+    let result = {
+      errCode: 7,
+      message: "Cant't restore note!",
+    };
+    try {
+      let data = await Note.findById(body.id);
+      if (data) {
+        data.isDelete = false;
+        await data.save();
+        result.errCode = 0;
+        result.message = "Restore note succeeds";
+        result.data = data;
+        resole(result);
+      } else {
+        resole(result);
+      }
+    } catch (e) {
+      reject(result);
+    }
+  });
+};
+let foreverdeleteNote = (body) => {
+  return new Promise(async (resole, reject) => {
+    let result = {
+      errCode: 8,
+      message: "Cant't forever delete note!",
+    };
+    try {
+      let data = await Note.findById(body.id);
+      if (data) {
+        await data.remove();
+        result.errCode = 0;
+        result.message = "Forever delete note succeeds";
+        resole(result);
+      } else {
+        resole(result);
+      }
+    } catch (e) {
+      reject(result);
+    }
+  });
+};
 
 module.exports = {
   allnotes,
@@ -144,4 +188,6 @@ module.exports = {
   createNote,
   updateNote,
   deleteNote,
+  restoreNote,
+  foreverdeleteNote,
 };
