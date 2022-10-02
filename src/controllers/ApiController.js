@@ -66,11 +66,23 @@ async function updateNote(req, res) {
     });
   }
 }
-
+async function deleteNote(req, res) {
+  let body = req.body;
+  let data = await services.deleteNote(body);
+  if (data) {
+    return res.json(data);
+  } else {
+    return res.json({
+      errCode: 6,
+      massage: "Can't delete note",
+    });
+  }
+}
 module.exports = {
   login,
   register,
   createNote,
   getAllNotes,
   updateNote,
+  deleteNote,
 };

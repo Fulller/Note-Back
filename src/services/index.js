@@ -1,6 +1,7 @@
 // let db = require('../config/db')
 const User = require("../modules/User");
 const Note = require("../modules/Note");
+const multer = require("multer");
 
 let register = (body) => {
   return new Promise(async (resole, reject) => {
@@ -96,7 +97,6 @@ let updateNote = (body) => {
     };
     try {
       let data = await Note.findById(body.id);
-      console.log(data);
       if (data) {
         data.title = body.title;
         data.value = body.value;
@@ -113,10 +113,35 @@ let updateNote = (body) => {
     }
   });
 };
+let deleteNote = (body) => {
+  return new Promise(async (resole, reject) => {
+    let result = {
+      errCode: 6,
+      message: "Cant't delete note!",
+    };
+    try {
+      let data = await Note.findById(body.id);
+      if (data) {
+        data.isDelete = true;
+        await data.save();
+        result.errCode = 0;
+        result.message = "Delete note succeeds";
+        result.data = data;
+        resole(result);
+      } else {
+        resole(result);
+      }
+    } catch (e) {
+      reject(result);
+    }
+  });
+};
+
 module.exports = {
   allnotes,
   register,
   login,
   createNote,
   updateNote,
+  deleteNote,
 };

@@ -1,4 +1,4 @@
-const apiRoute = require('./apiRoute')
+const apiRoute = require('./apiRoute');
 
 function route(app) {
     app.use('/api', apiRoute);
