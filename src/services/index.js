@@ -12,6 +12,8 @@ let register = (body) => {
         firstName: body.firstName,
         lastName: body.lastName,
         password: body.password,
+        avatar:
+          "https://cdn.uconnectlabs.com/wp-content/uploads/sites/46/2019/04/GitHub-Mark.png",
       });
       result.errCode = 0;
       result.massage = "Create Account Success";
@@ -145,10 +147,12 @@ let restoreNote = (body) => {
     try {
       let data = await Note.findById(body.id);
       if (data) {
-        data.isDelete = false;
+        data.firstName = body.firstName;
+        data.lastName = body.lastName;
+        data.avatar = body.avatar;
         await data.save();
         result.errCode = 0;
-        result.message = "Restore note succeeds";
+        result.message = "Update user succeeds";
         result.data = data;
         resole(result);
       } else {
@@ -180,7 +184,31 @@ let foreverdeleteNote = (body) => {
     }
   });
 };
-
+let updateUser = (body) => {
+  return new Promise(async (resole, reject) => {
+    let result = {
+      errCode: 9,
+      message: "Cant't update user!",
+    };
+    try {
+      let data = await User.findById(body.id);
+      if (data) {
+        data.avatar = body.avatar;
+        data.firstName = body.firstName;
+        data.lastName = body.lastName;
+        await data.save();
+        result.errCode = 0;
+        result.message = "Update user succeeds";
+        result.data = data;
+        resole(result);
+      } else {
+        resole(result);
+      }
+    } catch (e) {
+      reject(result);
+    }
+  });
+};
 module.exports = {
   allnotes,
   register,
@@ -190,4 +218,5 @@ module.exports = {
   deleteNote,
   restoreNote,
   foreverdeleteNote,
+  updateUser,
 };

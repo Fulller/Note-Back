@@ -97,8 +97,20 @@ async function foreverdeleteNote(req, res) {
     return res.json(data);
   } else {
     return res.json({
-      errCode: 7,
+      errCode: 8,
       massage: "Can't delete forever note",
+    });
+  }
+}
+async function updateUser(req, res) {
+  let body = req.body;
+  let data = await services.updateUser(body);
+  if (data) {
+    return res.json(data);
+  } else {
+    return res.json({
+      errCode: 9,
+      massage: "Can't updatae user",
     });
   }
 }
@@ -111,4 +123,5 @@ module.exports = {
   deleteNote,
   restoreNote,
   foreverdeleteNote,
+  updateUser,
 };
