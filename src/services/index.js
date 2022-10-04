@@ -2,19 +2,28 @@
 const User = require("../modules/User");
 const Note = require("../modules/Note");
 const multer = require("multer");
+const { findOne } = require("../modules/User");
 
 let register = (body) => {
   return new Promise(async (resole, reject) => {
     let result = {};
     try {
-      await User.create({
-        userName: body.userName,
-        firstName: body.firstName,
-        lastName: body.lastName,
-        password: body.password,
-        avatar:
-          "https://cdn.uconnectlabs.com/wp-content/uploads/sites/46/2019/04/GitHub-Mark.png",
-      });
+      let findUser = await User.findOne({ userName: body.userName });
+      if (findUser) {
+        result.errCode = 1;
+        result.massage = "Account already exists";
+        resole(result);
+        return;
+      } else {
+        await User.create({
+          userName: body.userName,
+          firstName: body.firstName,
+          lastName: body.lastName,
+          password: body.password,
+          avatar:
+            "https://cdn.uconnectlabs.com/wp-content/uploads/sites/46/2019/04/GitHub-Mark.png",
+        });
+      }
       result.errCode = 0;
       result.massage = "Create Account Success";
       resole(result);
