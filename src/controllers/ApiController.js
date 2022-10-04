@@ -111,7 +111,19 @@ async function updateUser(req, res) {
   } else {
     return res.json({
       errCode: 9,
-      massage: "Can't updatae user",
+      massage: "Can't update user",
+    });
+  }
+}
+async function deleteAccount(req, res) {
+  let body = req.body;
+  let data = await services.deleteAccount(body);
+  if (data) {
+    return res.json(data);
+  } else {
+    return res.json({
+      errCode: 10,
+      massage: "Can't delete user",
     });
   }
 }
@@ -125,4 +137,5 @@ module.exports = {
   restoreNote,
   foreverdeleteNote,
   updateUser,
+  deleteAccount,
 };

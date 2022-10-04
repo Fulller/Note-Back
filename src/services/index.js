@@ -196,10 +196,32 @@ let updateUser = (body) => {
         data.avatar = body.avatar;
         data.firstName = body.firstName;
         data.lastName = body.lastName;
+        data.password = body.password;
         await data.save();
         result.errCode = 0;
         result.message = "Update user succeeds";
         result.data = data;
+        resole(result);
+      } else {
+        resole(result);
+      }
+    } catch (e) {
+      reject(result);
+    }
+  });
+};
+let deleteAccount = (body) => {
+  return new Promise(async (resole, reject) => {
+    let result = {
+      errCode: 10,
+      message: "Cant't delete account note!",
+    };
+    try {
+      let data = await User.findById(body.id);
+      if (data) {
+        await data.remove();
+        result.errCode = 0;
+        result.message = "Delete account succeeds";
         resole(result);
       } else {
         resole(result);
@@ -219,4 +241,5 @@ module.exports = {
   restoreNote,
   foreverdeleteNote,
   updateUser,
+  deleteAccount,
 };

@@ -12,5 +12,6 @@ route.post("/deleteNote", apiController.deleteNote);
 route.post("/restoreNote", apiController.restoreNote);
 route.post("/foreverdeleteNote", apiController.foreverdeleteNote);
 route.post("/updateUser", apiController.updateUser);
+route.post("/deleteAccount", apiController.deleteAccount);
 
 module.exports = route;
