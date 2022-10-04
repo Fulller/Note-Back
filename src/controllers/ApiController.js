@@ -56,6 +56,7 @@ async function getAllNotes(req, res) {
 
 async function updateNote(req, res) {
   let body = req.body;
+  console.log(body);
   let data = await services.updateNote(body);
   if (data) {
     return res.json(data);

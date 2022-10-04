@@ -59,6 +59,7 @@ let createNote = (body) => {
         userName: body.userName,
         value: body.value,
         title: body.title,
+        images: body.images,
       });
       result.errCode = 0;
       result.massage = "Create note Success";
@@ -102,6 +103,7 @@ let updateNote = (body) => {
       if (data) {
         data.title = body.title;
         data.value = body.value;
+        data.images = body.images;
         await data.save();
         result.errCode = 0;
         result.message = "Update note succeeds";
@@ -147,12 +149,10 @@ let restoreNote = (body) => {
     try {
       let data = await Note.findById(body.id);
       if (data) {
-        data.firstName = body.firstName;
-        data.lastName = body.lastName;
-        data.avatar = body.avatar;
+        data.isDelete = false;
         await data.save();
         result.errCode = 0;
-        result.message = "Update user succeeds";
+        result.message = "Restore note succeeds";
         result.data = data;
         resole(result);
       } else {
